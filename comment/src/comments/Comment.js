@@ -1,4 +1,5 @@
 import CommentForm from "./CommentForm";
+import commentImage from '/Users/bryanzeng/Documents/GitHub/ts-practice/comment/src/comments/3135715 copy.png';
 
 const Comment = ({
   comment,
@@ -30,7 +31,7 @@ const Comment = ({
   return (
     <div key={comment.id} className="comment">
       <div className="comment-image-container">
-        <img src="/user-icon.png" />
+        <img src = {commentImage} style={{ width: '40px', height: '40px' }}/>
       </div>
       <div className="comment-right-part">
         <div className="comment-content">
