@@ -11,6 +11,7 @@ import {
 const Comments = ({ commentsUrl, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
@@ -52,31 +53,43 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   };
 
   useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data);
-    });
+    getCommentsApi()
+      .then((data) => {
+        setBackendComments(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching comments:", error);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
     <div className="comments">
       <h3 className="comments-title">Comments</h3>
-      <div className="comment-form-title">Create new post</div>
-      <CommentForm submitLabel="Write" handleSubmit={addComment} />
-      <div className="comments-container">
-        {rootComments.map((rootComment) => (
-          <Comment
-            key={rootComment.id}
-            comment={rootComment}
-            replies={getReplies(rootComment.id)}
-            activeComment={activeComment}
-            setActiveComment={setActiveComment}
-            addComment={addComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
-            currentUserId={currentUserId}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <p>Loading comments and emotion data...</p>
+      ) : (
+        <div>
+          <div className="comment-form-title">Create new post</div>
+          <CommentForm submitLabel="Write" handleSubmit={addComment} />
+          <div className="comments-container">
+            {rootComments.map((rootComment) => (
+              <Comment
+                key={rootComment.id}
+                comment={rootComment}
+                replies={getReplies(rootComment.id)}
+                activeComment={activeComment}
+                setActiveComment={setActiveComment}
+                addComment={addComment}
+                deleteComment={deleteComment}
+                updateComment={updateComment}
+                currentUserId={currentUserId}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
