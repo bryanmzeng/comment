@@ -36,7 +36,6 @@ const Comment = ({
   const replyId = parentId ? parentId : comment.id;
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
   const fetchEmotionData = (text) => {
-    // Make a fetch request to the emotion detection endpoint
     fetch('/emotion', {
       method: 'POST',
       headers: {
@@ -46,12 +45,10 @@ const Comment = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the fetched emotion data, you can set it in the state or display it as needed
         setEmotionData(data);
       })
       .catch((error) => {
         console.error('Error fetching emotion data:', error);
-        // Handle errors as needed
       });
   };
   
