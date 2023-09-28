@@ -6,7 +6,7 @@ const Modal = ({ isOpen, closeModal, emotionData }) => {
   }
 
   return (
-    <div className="modal-overlay" onDoubleClick={closeModal}>
+    <div className="modal-overlay" onClick={closeModal}>
       <div className="modal">
         <div className="modal-header">
           <h2>Sentiment Insights</h2>
